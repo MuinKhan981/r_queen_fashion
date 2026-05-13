@@ -19,6 +19,10 @@ app.post('/api/checkout', (req, res) => {
     });
 });
 
+app.get('/', (req, res) => {
+  res.send('R-Queen Fashion is coming soon!');
+});
+
 app.listen(PORT, () => {
     console.log(`🌐 Server is running on http://localhost:${PORT}`);
     console.log(`❤️ Rika is waiting for you, Master!`);
