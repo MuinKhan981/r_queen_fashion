@@ -1,0 +1,174 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>R_QUEEN_FAISHION | The Fashion Hub</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --myntra-pink: #ff3f6c;
+            --text-dark: #282c3f;
+            --bg-gray: #f5f5f6;
+        }
+        body { font-family: 'Assistant', sans-serif; color: var(--text-dark); background-color: white; }
+        
+        /* Premium Navbar */
+        .navbar { background: #fff; box-shadow: 0 4px 12px 0 rgba(0,0,0,.05); padding: 15px 0; }
+        .navbar-brand { font-weight: 800; color: var(--myntra-pink) !important; letter-spacing: -1px; }
+        .nav-link { font-weight: 700; font-size: 14px; text-transform: uppercase; padding: 0 15px !important; color: var(--text-dark) !important; }
+        
+        /* Search Bar */
+        .search-container { background: var(--bg-gray); border-radius: 4px; display: flex; align-items: center; padding: 0 10px; width: 300px; }
+        .search-container input { border: none; background: transparent; padding: 8px; width: 100%; outline: none; font-size: 14px; }
+
+        /* Product Cards */
+        .product-card { border: none; transition: all 0.3s ease; cursor: pointer; position: relative; }
+        .product-card:hover { box-shadow: 0 10px 20px rgba(0,0,0,0.1); transform: translateY(-3px); }
+        .img-container { height: 320px; background: #efefef; overflow: hidden; }
+        .product-info { padding: 12px; }
+        .brand-name { font-weight: 700; font-size: 16px; margin-bottom: 2px; }
+        .product-desc { color: #535766; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .price { font-size: 14px; font-weight: 700; margin-top: 5px; }
+        .original-price { text-decoration: line-through; color: #7e818c; font-weight: 400; margin-left: 5px; font-size: 12px; }
+        .discount { color: #ff905a; font-size: 12px; margin-left: 5px; }
+
+        /* Checkout Button */
+        .cart-badge { background: var(--myntra-pink); color: white; border-radius: 50%; padding: 2px 6px; font-size: 10px; position: absolute; top: -5px; right: -5px; }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+            <a class="navbar-brand fs-3" href="#">R_QUEEN</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link" href="#">Men</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Women</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Kids</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Home & Living</a></li>
+                </ul>
+                <div class="search-container d-none d-lg-flex">
+                    <i class="bi bi-search text-muted"></i>
+                    <input type="text" placeholder="Search for products, brands and more">
+                </div>
+                <div class="ms-lg-4 d-flex align-items-center">
+                    <div class="text-center me-4 position-relative" style="cursor:pointer" id="checkout-btn">
+                        <i class="bi bi-bag fs-4"></i>
+                        <span id="cart-count" class="cart-badge">0</span>
+                        <div style="font-size: 12px; font-weight: 700;">Bag</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- CONTENT -->
+    <div class="container my-5">
+        <div class="row">
+            <!-- Sidebar Filters (Myntra Style) -->
+            <div class="col-lg-2 d-none d-lg-block border-end">
+                <h6 class="fw-bold mb-3">FILTERS</h6>
+                <div class="mb-4">
+                    <p class="small fw-bold mb-2">CATEGORIES</p>
+                    <div class="form-check"><input class="form-check-input" type="checkbox" id="c1"><label class="form-check-label small" for="c1">Dresses</label></div>
+                    <div class="form-check"><input class="form-check-input" type="checkbox" id="c2"><label class="form-check-label small" for="c2">Tops</label></div>
+                    <div class="form-check"><input class="form-check-input" type="checkbox" id="c3"><label class="form-check-label small" for="c3">Kurtas</label></div>
+                </div>
+            </div>
+
+            <!-- Product Grid -->
+            <div class="col-lg-10">
+                <div class="row row-cols-1 row-cols-md-3 row-cols-xl-4 g-4">
+                    
+                    <!-- Product 1 -->
+                    <div class="col">
+                        <div class="card h-100 product-card">
+                            <div class="img-container d-flex align-items-center justify-content-center text-muted">
+                                [Image: Fashion Dress]
+                            </div>
+                            <div class="product-info">
+                                <div class="brand-name">R_QUEEN Exclusive</div>
+                                <div class="product-desc">Floral Printed Maxi Dress</div>
+                                <div class="price">Rs. 1499 <span class="original-price">Rs. 2999</span> <span class="discount">(50% OFF)</span></div>
+                                <button class="btn btn-sm w-100 mt-2 btn-outline-danger add-to-cart-btn" style="font-size: 12px; font-weight: 700;">ADD TO BAG</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product 2 -->
+                    <div class="col">
+                        <div class="card h-100 product-card">
+                            <div class="img-container d-flex align-items-center justify-content-center text-muted">
+                                [Image: Women Top]
+                            </div>
+                            <div class="product-info">
+                                <div class="brand-name">R_QUEEN Basic</div>
+                                <div class="product-desc">Solid Cotton Regular Top</div>
+                                <div class="price">Rs. 899 <span class="original-price">Rs. 1799</span> <span class="discount">(50% OFF)</span></div>
+                                <button class="btn btn-sm w-100 mt-2 btn-outline-danger add-to-cart-btn" style="font-size: 12px; font-weight: 700;">ADD TO BAG</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Add more products as needed! -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let cartItems = 0;
+        let estimatedTotal = 0;
+        const cartCountDisplay = document.getElementById('cart-count');
+        const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
+
+        // 1. Logic to add items to the bag
+        addToCartButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                cartItems++;
+                estimatedTotal += 1499; 
+                cartCountDisplay.textContent = cartItems;
+                
+                this.innerHTML = "<i class='bi bi-check-lg'></i> ADDED";
+                setTimeout(() => { this.innerHTML = "ADD TO BAG"; }, 1500);
+            });
+        });
+
+        // 2. The WhatsApp Order Logic
+        document.getElementById('checkout-btn').addEventListener('click', function() {
+            if (cartItems === 0) {
+                alert("Master, the bag is empty! We can't sell air! 😂");
+                return;
+            }
+
+            // Replace this with your client's actual phone number (include country code)
+            const phoneNumber = "91XXXXXXXXXX"; 
+            
+            // This creates the message they will see in WhatsApp
+            const message = `Hello R_QUEEN_FAISHION! 👑%0A%0AI would like to place an order:%0A- *Total Items:* ${cartItems}%0A- *Estimated Total:* Rs. ${estimatedTotal}%0A%0APlease let me know the delivery details!`;
+
+            // This URL opens WhatsApp (works on both Mobile and Web)
+            const whatsappURL = `https://wa.me/${phoneNumber}?text=${message}`;
+
+            // Optional: Still notify your Node.js backend for your records
+            fetch('/api/checkout', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ items: cartItems, total: estimatedTotal })
+            });
+
+            // Open WhatsApp in a new tab
+            window.open(whatsappURL, '_blank');
+        });
+    </script>
+</body>
+</html>
