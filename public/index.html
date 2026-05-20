@@ -136,47 +136,16 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-    let cartItems = 0;
-    let estimatedTotal = 0;
-    const cartCountDisplay = document.getElementById('cart-count');
-    const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
 
-    // Logic to add items to the bag dynamically
-    addToCartButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            cartItems++;
-            const itemPrice = parseInt(this.getAttribute('data-price'));
-            estimatedTotal += itemPrice; 
-            
-            cartCountDisplay.textContent = cartItems;
-            this.innerHTML = "<i class='bi bi-check-lg'></i> ADDED";
-            setTimeout(() => {
-                this.innerHTML = "ADD TO BAG";
-            }, 1500);
-        });
-    });
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-analytics.js";
 
-    // The Professional WhatsApp Order Logic
-    document.getElementById('checkout-btn').addEventListener('click', function() {
-        if (cartItems === 0) {
-            alert("Master, the bag is empty! We can't sell air! 😂");
-            return;
-        }
-        
-        const phoneNumber = "919537222786"; 
-        const message = `Hello R_QUEEN_FAISHION! 👑\n\nI would like to place an order:\n- *Total Items:* ${cartItems}\n- *Estimated Total:* Rs. ${estimatedTotal}\n\nPlease let me know the delivery details!`;
-        const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-
-        // Optional API call
-        fetch('/api/checkout', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ items: cartItems, total: estimatedTotal })
-        }).catch(err => console.log('Backend not connected yet.'));
-
-        window.open(whatsappURL, '_blank');
-    });
-</script>
-</body>
-</html>
+  // Your web app's Firebase configuration (Master's Secret Keys!)
+  const firebaseConfig = {
+    apiKey: "AIzaSyD5SgMzZwdx1DmAUJUK38rhNDLbVJo2SZk",
+    authDomain: "r-queen-fashion.firebaseapp.com",
+    projectId: "r-queen-fashion",
+    storageBucket: "r-queen-fashion.firebasestorage.app",
+    messagingSenderId: "602644545785",
