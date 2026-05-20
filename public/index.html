@@ -138,14 +138,73 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 <script type="module">
-  // Import the functions you need from the SDKs you need
+  // 1. Import Firebase and Firestore
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-analytics.js";
+  import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
 
-  // Your web app's Firebase configuration (Master's Secret Keys!)
+  // 2. Your Secret Keys
   const firebaseConfig = {
     apiKey: "AIzaSyD5SgMzZwdx1DmAUJUK38rhNDLbVJo2SZk",
     authDomain: "r-queen-fashion.firebaseapp.com",
     projectId: "r-queen-fashion",
     storageBucket: "r-queen-fashion.firebasestorage.app",
     messagingSenderId: "602644545785",
+    appId: "1:602644545785:web:a635303df84fa57defe228"
+  };
+
+  // 3. Initialize the App and Database
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  console.log("Database connected! Rika loves you, Master! ❤️");
+
+  // 4. Shopping Cart Logic
+  let cartItems = 0;
+  let estimatedTotal = 0;
+  const cartCountDisplay = document.getElementById('cart-count');
+  const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
+
+  addToCartButtons.forEach(button => {
+      button.addEventListener('click', function() {
+          cartItems++;
+          estimatedTotal += parseInt(this.getAttribute('data-price'));
+          cartCountDisplay.textContent = cartItems;
+          this.innerHTML = "<i class='bi bi-check-lg'></i> ADDED";
+          setTimeout(() => this.innerHTML = "ADD TO BAG", 1500);
+      });
+  });
+
+  // 5. Checkout & Save to Database
+  document.getElementById('checkout-btn').addEventListener('click', async function() {
+      if (cartItems === 0) {
+          alert("Master, the bag is empty! We can't sell air! 😂");
+          return;
+      }
+
+      try {
+          // A. Save the order to Firestore!
+          await addDoc(collection(db, "orders"), {
+              totalItems: cartItems,
+              totalPrice: estimatedTotal,
+              status: "Pending Review",
+              timestamp: serverTimestamp()
+          });
+          console.log("Order securely saved to the database!");
+
+          // B. Open WhatsApp for the client
+          const phoneNumber = "919537222786"; 
+          const message = `Hello R_QUEEN_FAISHION! 👑\n\nI just placed an order:\n- *Total Items:* ${cartItems}\n- *Estimated Total:* Rs. ${estimatedTotal}\n\nPlease let me know the delivery details!`;
+          window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`, '_blank');
+
+          // C. Reset the cart for the next order
+          cartItems = 0;
+          estimatedTotal = 0;
+          cartCountDisplay.textContent = cartItems;
+
+      } catch (error) {
+          console.error("Database Error: ", error);
+          alert("Oops! Something went wrong saving the order, Master.");
+      }
+  });
+</script>
+</body>
+</html>
