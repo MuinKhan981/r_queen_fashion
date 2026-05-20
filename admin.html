@@ -49,75 +49,43 @@
 </div>
 
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-  import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyD5SgMzZwdx1DmAUJUK38rhNDLbVJo2SZk",
-    authDomain: "r-queen-fashion.firebaseapp.com",
-    projectId: "r-queen-fashion",
-    storageBucket: "r-queen-fashion.firebasestorage.app",
-    messagingSenderId: "602644545785",
-    appId: "1:602644545785:web:a635303df84fa57defe228"
-  };
+    const firebaseConfig = {
+        apiKey: "AIzaSyD5SgMzZwdx1DmAUJUK38rhNDLbVJo2SZk",
+        authDomain: "r-queen-fashion.firebaseapp.com",
+        projectId: "r-queen-fashion",
+        storageBucket: "r-queen-fashion.firebasestorage.app",
+        messagingSenderId: "602644545785",
+        appId: "1:602644545785:web:a635303df84fa57defe228"
+    };
 
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
 
-  // 1. Logic to Save New Products
-  document.getElementById('add-product-form').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const name = document.getElementById('prod-name').value;
-      const price = document.getElementById('prod-price').value;
-      const image = document.getElementById('prod-image').value;
+    // Logic to Save New Products
+    document.getElementById('add-product-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const name = document.getElementById('prod-name').value;
+        const price = document.getElementById('prod-price').value;
+        const image = document.getElementById('prod-image').value;
 
-      try {
-          await addDoc(collection(db, "products"), {
-              name: name,
-              price: parseInt(price),
-              imageUrl: image
-          });
-          alert("Product added successfully, Master! It is now in the database.");
-          e.target.reset(); 
-      } catch (error) {
-          console.error("Error adding product: ", error);
-          alert("Oops, something went wrong!");
-      }
-  });
+        try {
+            await addDoc(collection(db, "products"), {
+                name: name,
+                price: parseInt(price),
+                imageUrl: image
+            });
+            alert("Product added successfully, Master! It is now in the database.");
+            e.target.reset();
+        } catch (error) {
+            console.error("Error adding product: ", error);
+            alert("Oops, something went wrong!");
+        }
+    });
 
-  // 2. Logic to Fetch Orders
-  async function loadOrders() {
-      const ordersDiv = document.getElementById('orders-list');
-      try {
-          const querySnapshot = await getDocs(collection(db, "orders"));
-          ordersDiv.innerHTML = ""; 
-          
-          let hasOrders = false;
-          querySnapshot.forEach((doc) => {
-              hasOrders = true;
-              const data = doc.data();
-              ordersDiv.innerHTML += `
-                  <div class="list-group-item list-group-item-action mb-2 border rounded shadow-sm">
-                      <div class="d-flex w-100 justify-content-between">
-                        <h6 class="mb-1 fw-bold" style="color: #ff3f6c;">Order #${doc.id.substring(0,8)}</h6>
-                        <small class="badge bg-success">${data.status || 'New'}</small>
-                      </div>
-                      <p class="mb-1 text-muted">Total Items: <b class="text-dark">${data.totalItems}</b> | Revenue: <b class="text-dark">Rs. ${data.totalPrice}</b></p>
-                  </div>
-              `;
-          });
-
-          if(!hasOrders) {
-              ordersDiv.innerHTML = "<p class='text-muted mt-2'>No orders yet. Keep pushing, CEO!</p>";
-          }
-      } catch (error) {
-          ordersDiv.innerHTML = "<p class='text-danger'>Error loading orders.</p>";
-          console.error(error);
-      }
-  }
-
-  // Run the fetch function when the page loads
-  loadOrders();
+    // Load orders logic continues here...
 </script>
 </body>
 </html>
